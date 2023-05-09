@@ -24,6 +24,14 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "Now UI React Native, based on Now UI Design System. Coded by Creative Tim"
+    "description": "Now UI React Native, based on Now UI Design System. Coded by Creative Tim",
+    "extra": {
+      "eas": {
+        "projectId": "7be66570-b60e-4e47-af8e-543c185083d7"
+      }
+    },
+    "android": {
+      "package": "com.mahasedra.nowuireactnative"
+    }
   }
 }
