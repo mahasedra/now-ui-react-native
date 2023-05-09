@@ -19,6 +19,10 @@ import SettingsScreen from '../screens/Settings';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useRoute } from '@react-navigation/native';
+import AddProf from '../screens/ProfCRUD/AddProf';
+import EditProf from '../screens/ProfCRUD/EditProf';
+import ListProf from '../screens/ProfCRUD/ListProf';
 
 const { width } = Dimensions.get('screen');
 
@@ -160,6 +164,75 @@ function HomeStack(props) {
   );
 }
 
+function ListProfStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        mode: 'card',
+        headerShown: 'screen',
+      }}
+    >
+      <Stack.Screen
+        name="ListProf"
+        component={ListProf}
+        options={{
+          header: ({ route, navigation, scene }) => (
+            <Header title="Liste des profs" route={route} navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: '#FFFFFF' },
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function AddProfStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        mode: 'card',
+        headerShown: 'screen',
+      }}
+    >
+      <Stack.Screen
+        name="AddProf"
+        component={AddProf}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header title="Ajouter Enseignant" navigation={navigation} scene={scene} />
+          ),
+          cardStyle: { backgroundColor: '#FFFFFF' },
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function EditProfStack(props) {
+  const route = useRoute();
+  const { id } = route.params;
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        mode: 'card',
+        headerShown: 'screen',
+      }}
+    >
+      <Stack.Screen
+        name="EditProf"
+        component={EditProf}
+        options={{
+          header: ({ navigation, scene }) => {
+            navigation.setParams({ id: route.params.id })
+            return (<Header title="Modifier enseignant" navigation={navigation} scene={scene} />)
+          },
+          cardStyle: { backgroundColor: '#FFFFFF' },
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function AppStack(props) {
   return (
     <Drawer.Navigator
@@ -189,11 +262,32 @@ function AppStack(props) {
           fontWeight: 'normal',
         },
       }}
-      initialRouteName="Home"
+      initialRouteName="ListProf"
     >
+      <Drawer.Screen
+        name="ListProf"
+        component={ListProfStack}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Drawer.Screen
         name="Home"
         component={HomeStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Drawer.Screen
+        name="AddProf"
+        component={AddProfStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Drawer.Screen
+        name="EditProf"
+        component={EditProfStack}
         options={{
           headerShown: false,
         }}
